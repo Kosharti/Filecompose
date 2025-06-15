@@ -1,5 +1,5 @@
 package org.example.project.utils
 
-actual fun isAndroid(): Boolean {
-    return false
+actual fun getBaseUrl(): String {
+    return "http://localhost:3000"
 }

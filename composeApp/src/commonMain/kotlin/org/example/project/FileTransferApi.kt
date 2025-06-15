@@ -13,7 +13,7 @@ import io.ktor.http.HttpHeaders
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
-import org.example.project.utils.isAndroid
+import org.example.project.utils.getBaseUrl
 
 class FileTransferApi {
     private val client = HttpClient {
@@ -27,7 +27,7 @@ class FileTransferApi {
             )
         }
     }
-    private val baseUrl = if(isAndroid()) "http://10.0.2.2:3000" else "http://localhost:3000"
+    private val baseUrl = getBaseUrl()
 
     suspend fun uploadFile(request: FileTransferRequest): FileTransferResponse {
         val formData = formData {

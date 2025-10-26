@@ -63,12 +63,14 @@ class FileTransferViewModel : ViewModel() {
     }
 
     fun updateExpirationDate(newValue: String) {
+        // Валидация формата для сервера
         expirationDate = when {
-            newValue.endsWith("min") -> newValue
+            newValue.endsWith("min") -> newValue.replace("min", "m")
             newValue.endsWith("h") -> newValue
             newValue.endsWith("d") -> newValue
             newValue.endsWith("w") -> newValue
-            else -> "${newValue}d"
+            newValue.toIntOrNull() != null -> "${newValue}d"
+            else -> "7d"
         }
     }
 

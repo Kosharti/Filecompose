@@ -30,13 +30,19 @@ class FileTransferApi {
     private val baseUrl = getBaseUrl()
 
     suspend fun uploadFile(request: FileTransferRequest): FileTransferResponse {
+
+        println("DEBUG: Sending to server:")
+        println("DEBUG: - expires: ${request.expiration}")
+        println("DEBUG: - maxDownloads: ${request.maxDownloads}")
+        println("DEBUG: - autoDelete: ${request.autoDelete}")
+
         val formData = formData {
             append("file", request.fileContent, Headers.build {
                 append(HttpHeaders.ContentDisposition, "filename=\"${request.fileName}\"")
             })
             append("expires", request.expiration)
             append("maxDownloads", request.maxDownloads.toString())
-            append("autoDelete", request.autoDelete.toString())
+            append("autoDelete", (!request.autoDelete).toString())
         }
 
         val response = client.post("$baseUrl/api/upload") {
